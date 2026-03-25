@@ -56,7 +56,6 @@ button {
   color: #c9d1d9;
   border: 1px solid #30363d;
   border-radius: 6px;
-  /* large tap targets for mobile */
   min-width: 44px;
   height: 38px;
   padding: 0 12px;
@@ -65,7 +64,6 @@ button {
   flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
 }
-
 button:active { background: #388bfd22; border-color: #58a6ff; }
 
 #zoom-pct {
@@ -86,7 +84,6 @@ button:active { background: #388bfd22; border-color: #58a6ff; }
   background-size: 28px 28px;
   touch-action: none;
 }
-
 #canvas.panning { cursor: grabbing; }
 
 #scene {
@@ -96,36 +93,59 @@ button:active { background: #388bfd22; border-color: #58a6ff; }
   will-change: transform;
 }
 
-#scene .mermaid { display: block; padding: 40px; }
-#scene svg { max-width: none !important; }
+/* LARGE base font so text is readable without zooming */
+#scene .mermaid {
+  display: block;
+  padding: 60px;
+  font-size: 24px !important;
+}
 
-/* Mobile zoom buttons — big floating buttons bottom-right */
+#scene svg {
+  max-width: none !important;
+  font-size: 24px !important;
+}
+
+/* Override mermaid internal font sizes */
+#scene svg text,
+#scene svg .label,
+#scene svg .nodeLabel,
+#scene svg .edgeLabel,
+#scene svg foreignObject div {
+  font-size: 18px !important;
+  line-height: 1.5 !important;
+}
+
+#scene svg .node rect,
+#scene svg .node circle,
+#scene svg .node polygon {
+  stroke-width: 2px !important;
+}
+
+/* Floating zoom buttons */
 #mobile-zoom {
   position: fixed;
-  bottom: 20px;
+  bottom: 24px;
   right: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   z-index: 200;
 }
 
 .mz-btn {
-  width: 52px;
-  height: 52px;
+  width: 56px; height: 56px;
   border-radius: 50%;
-  background: rgba(33,38,45,0.95);
+  background: rgba(33,38,45,0.97);
   border: 1px solid #30363d;
   color: #e6edf3;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.6);
   -webkit-tap-highlight-color: transparent;
 }
-
 .mz-btn:active { background: #388bfd33; border-color: #58a6ff; }
 ```
 
@@ -135,9 +155,9 @@ button:active { background: #388bfd22; border-color: #58a6ff; }
 
 <div id="toolbar">
   <h1>🏛️ WV HB 2014 — Politicians, Conflicts &amp; Connections</h1>
-  <button onclick="zoomBy(-0.2)" title="Zoom out" style="font-size:1.1rem">−</button>
+  <button onclick="zoomBy(-0.2)">−</button>
   <span id="zoom-pct">100%</span>
-  <button onclick="zoomBy(0.2)" title="Zoom in" style="font-size:1.1rem">+</button>
+  <button onclick="zoomBy(0.2)">+</button>
   <div class="tb-sep"></div>
   <button onclick="fitAll()" style="font-size:0.75rem;padding:0 8px;">Fit</button>
   <button onclick="resetView()" style="font-size:0.75rem;padding:0 8px;">1:1</button>
@@ -287,18 +307,23 @@ class ELECTIONS,CROSSOVER election
   </div>
 </div>
 
-<!-- Extra floating zoom buttons for easy thumb access on phone -->
-
 <div id="mobile-zoom">
-  <div class="mz-btn" ontouchstart="startRepeat(zoomIn)" ontouchend="stopRepeat()" onclick="zoomBy(0.25)">+</div>
-  <div class="mz-btn" ontouchstart="startRepeat(zoomOut)" ontouchend="stopRepeat()" onclick="zoomBy(-0.25)">−</div>
+  <div class="mz-btn" ontouchstart="startRepeat(zoomIn)" ontouchend="stopRepeat()" onclick="zoomBy(0.3)">+</div>
+  <div class="mz-btn" ontouchstart="startRepeat(zoomOut)" ontouchend="stopRepeat()" onclick="zoomBy(-0.3)">−</div>
 </div>
 
 <script>
   mermaid.initialize({
     startOnLoad: true,
     theme: 'dark',
-    flowchart: { htmlLabels: true, curve: 'basis', nodeSpacing: 50, rankSpacing: 80, padding: 20 },
+    flowchart: {
+      htmlLabels: true,
+      curve: 'basis',
+      nodeSpacing: 80,
+      rankSpacing: 120,
+      padding: 30,
+      useMaxWidth: false,
+    },
     themeVariables: {
       background: '#0d1117',
       primaryColor: '#1f2937',
@@ -308,7 +333,9 @@ class ELECTIONS,CROSSOVER election
       secondaryColor: '#161b22',
       tertiaryColor: '#21262d',
       edgeLabelBackground: '#161b22',
-      fontSize: '13px',
+      // Large font baked into the SVG
+      fontSize: '20px',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }
   });
 
@@ -316,9 +343,8 @@ class ELECTIONS,CROSSOVER election
   const scene  = document.getElementById('scene');
   const pctEl  = document.getElementById('zoom-pct');
 
-  // MAX zoom raised to 20x so you can read small text on phone
-  const MIN_SCALE = 0.05;
-  const MAX_SCALE = 20;
+  const MIN_SCALE = 0.01;
+  const MAX_SCALE = 50;
 
   let scale = 1, tx = 0, ty = 0;
 
@@ -327,13 +353,9 @@ class ELECTIONS,CROSSOVER election
     pctEl.textContent = Math.round(scale * 100) + '%';
   }
 
-  function clampTranslate() {
-    // allow panning slightly beyond edges for comfort
-  }
-
-  function zoomAt(cx, cy, delta) {
+  function zoomAt(cx, cy, factor) {
     const prev = scale;
-    scale = Math.min(Math.max(scale * (1 + delta), MIN_SCALE), MAX_SCALE);
+    scale = Math.min(Math.max(scale * factor, MIN_SCALE), MAX_SCALE);
     const ratio = scale / prev;
     tx = cx - ratio * (cx - tx);
     ty = cy - ratio * (cy - ty);
@@ -342,13 +364,13 @@ class ELECTIONS,CROSSOVER election
 
   function zoomBy(delta) {
     const r = canvas.getBoundingClientRect();
-    zoomAt(r.width / 2, r.height / 2, delta);
+    zoomAt(r.width / 2, r.height / 2, 1 + delta);
   }
 
   function zoomIn()  { zoomBy(0.15); }
   function zoomOut() { zoomBy(-0.15); }
 
-  function resetView() { scale = 1; tx = 40; ty = 40; applyTransform(); }
+  function resetView() { scale = 1; tx = 60; ty = 60; applyTransform(); }
 
   function fitAll() {
     const cw = canvas.clientWidth;
@@ -361,116 +383,87 @@ class ELECTIONS,CROSSOVER election
     applyTransform();
   }
 
-  // ── Repeat-on-hold for mobile zoom buttons ──
+  // Hold-to-repeat
   let repeatTimer = null;
-  function startRepeat(fn) {
-    fn();
-    repeatTimer = setInterval(fn, 80);
-  }
+  function startRepeat(fn) { fn(); repeatTimer = setInterval(fn, 80); }
   function stopRepeat() { clearInterval(repeatTimer); repeatTimer = null; }
 
-  // ── Mouse wheel ──
+  // Mouse wheel
   canvas.addEventListener('wheel', e => {
     e.preventDefault();
     const r = canvas.getBoundingClientRect();
-    // ctrlKey = pinch gesture on trackpad; otherwise normal scroll
-    const delta = e.deltaY < 0 ? 0.15 : -0.15;
-    zoomAt(e.clientX - r.left, e.clientY - r.top, delta);
+    const factor = e.deltaY < 0 ? 1.15 : 0.87;
+    zoomAt(e.clientX - r.left, e.clientY - r.top, factor);
   }, { passive: false });
 
-  // ── Mouse drag ──
-  let dragging = false, lastMX = 0, lastMY = 0;
+  // Mouse drag
+  let dragging = false, lmx = 0, lmy = 0;
   canvas.addEventListener('mousedown', e => {
     if (e.button !== 0) return;
-    dragging = true; lastMX = e.clientX; lastMY = e.clientY;
+    dragging = true; lmx = e.clientX; lmy = e.clientY;
     canvas.classList.add('panning');
   });
   window.addEventListener('mouseup', () => { dragging = false; canvas.classList.remove('panning'); });
   window.addEventListener('mousemove', e => {
     if (!dragging) return;
-    tx += e.clientX - lastMX; ty += e.clientY - lastMY;
-    lastMX = e.clientX; lastMY = e.clientY;
+    tx += e.clientX - lmx; ty += e.clientY - lmy;
+    lmx = e.clientX; lmy = e.clientY;
     applyTransform();
   });
 
-  // ── Touch: pan + pinch ──
-  let activeTouches = {};
-  let pinchStartDist = null;
-  let pinchStartScale = 1;
-  let pinchCX = 0, pinchCY = 0;
-  let lastSingleX = 0, lastSingleY = 0;
+  // Touch
+  let tpts = {}, pinchDist0 = null, pinchScale0 = 1, pinchCX = 0, pinchCY = 0, ltx = 0, lty = 0;
 
   canvas.addEventListener('touchstart', e => {
     e.preventDefault();
-    [...e.changedTouches].forEach(t => {
-      activeTouches[t.identifier] = { x: t.clientX, y: t.clientY };
-    });
-
-    const ids = Object.keys(activeTouches);
-    if (ids.length === 2) {
-      const a = activeTouches[ids[0]], b = activeTouches[ids[1]];
-      pinchStartDist = Math.hypot(b.x - a.x, b.y - a.y);
-      pinchStartScale = scale;
+    [...e.changedTouches].forEach(t => tpts[t.identifier] = [t.clientX, t.clientY]);
+    const keys = Object.keys(tpts);
+    if (keys.length === 2) {
+      const a = tpts[keys[0]], b = tpts[keys[1]];
+      pinchDist0 = Math.hypot(b[0]-a[0], b[1]-a[1]);
+      pinchScale0 = scale;
       const r = canvas.getBoundingClientRect();
-      pinchCX = (a.x + b.x) / 2 - r.left;
-      pinchCY = (a.y + b.y) / 2 - r.top;
-    } else if (ids.length === 1) {
-      const t = e.touches[0];
-      lastSingleX = t.clientX;
-      lastSingleY = t.clientY;
+      pinchCX = (a[0]+b[0])/2 - r.left;
+      pinchCY = (a[1]+b[1])/2 - r.top;
     }
+    if (e.touches.length === 1) { ltx = e.touches[0].clientX; lty = e.touches[0].clientY; }
   }, { passive: false });
 
   canvas.addEventListener('touchmove', e => {
     e.preventDefault();
-    const ids = Object.keys(activeTouches);
-
-    if (e.touches.length === 2) {
-      // Pinch zoom
+    if (e.touches.length >= 2) {
       const t0 = e.touches[0], t1 = e.touches[1];
-      const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
-
-      if (pinchStartDist) {
-        const newScale = Math.min(Math.max(pinchStartScale * (dist / pinchStartDist), MIN_SCALE), MAX_SCALE);
-        const ratio = newScale / scale;
-        scale = newScale;
-        tx = pinchCX - ratio * (pinchCX - tx);
-        ty = pinchCY - ratio * (pinchCY - ty);
-        applyTransform();
+      const dist = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
+      if (pinchDist0) {
+        const ns = Math.min(Math.max(pinchScale0 * (dist/pinchDist0), MIN_SCALE), MAX_SCALE);
+        const ratio = ns / scale;
+        scale = ns;
+        tx = pinchCX - ratio*(pinchCX-tx);
+        ty = pinchCY - ratio*(pinchCY-ty);
       }
-
-      // Also pan with two-finger midpoint
+      // pan midpoint
       const r = canvas.getBoundingClientRect();
-      const newCX = (t0.clientX + t1.clientX) / 2 - r.left;
-      const newCY = (t0.clientY + t1.clientY) / 2 - r.top;
-      tx += newCX - pinchCX;
-      ty += newCY - pinchCY;
-      pinchCX = newCX;
-      pinchCY = newCY;
+      const nx = (t0.clientX+t1.clientX)/2 - r.left;
+      const ny = (t0.clientY+t1.clientY)/2 - r.top;
+      tx += nx - pinchCX; ty += ny - pinchCY;
+      pinchCX = nx; pinchCY = ny;
       applyTransform();
-
     } else if (e.touches.length === 1) {
-      // Single finger pan
       const t = e.touches[0];
-      tx += t.clientX - lastSingleX;
-      ty += t.clientY - lastSingleY;
-      lastSingleX = t.clientX;
-      lastSingleY = t.clientY;
+      tx += t.clientX - ltx; ty += t.clientY - lty;
+      ltx = t.clientX; lty = t.clientY;
       applyTransform();
     }
   }, { passive: false });
 
   canvas.addEventListener('touchend', e => {
     e.preventDefault();
-    [...e.changedTouches].forEach(t => delete activeTouches[t.identifier]);
-    pinchStartDist = null;
-    if (e.touches.length === 1) {
-      lastSingleX = e.touches[0].clientX;
-      lastSingleY = e.touches[0].clientY;
-    }
+    [...e.changedTouches].forEach(t => delete tpts[t.identifier]);
+    pinchDist0 = null;
+    if (e.touches.length === 1) { ltx = e.touches[0].clientX; lty = e.touches[0].clientY; }
   }, { passive: false });
 
-  // ── Keyboard shortcuts ──
+  // Keyboard
   window.addEventListener('keydown', e => {
     if (e.key === '=' || e.key === '+') zoomBy(0.2);
     if (e.key === '-' || e.key === '_') zoomBy(-0.2);
@@ -478,8 +471,7 @@ class ELECTIONS,CROSSOVER election
     if (e.key === '1') resetView();
   });
 
-  // ── Auto-fit on load ──
-  window.addEventListener('load', () => setTimeout(fitAll, 700));
+  window.addEventListener('load', () => setTimeout(fitAll, 800));
 </script>
 
 </body>
