@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WV HB 2014 — Politicians, Conflicts & Connections</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+```
+body {
+  background: #0d1117;
+  color: #c9d1d9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  padding: 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e6edf3;
+}
+
+header p {
+  font-size: 0.9rem;
+  color: #8b949e;
+  max-width: 900px;
+  line-height: 1.5;
+}
+
+.meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.badge-law    { background: #1f3a5f; color: #79c0ff; border: 1px solid #1f6feb; }
+.badge-ethics { background: #3d1a00; color: #ffa657; border: 1px solid #d29922; }
+.badge-foia   { background: #0d2d3a; color: #39d353; border: 1px solid #238636; }
+.badge-date   { background: #21262d; color: #8b949e; border: 1px solid #30363d; }
+
+.toolbar {
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.toolbar span {
+  font-size: 0.8rem;
+  color: #8b949e;
+}
+
+button {
+  background: #21262d;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+button:hover {
+  background: #30363d;
+  border-color: #8b949e;
+}
+
+button.active {
+  background: #1f3a5f;
+  border-color: #1f6feb;
+  color: #79c0ff;
+}
+
+#zoom-level {
+  font-size: 0.8rem;
+  color: #8b949e;
+  min-width: 48px;
+  text-align: center;
+}
+
+#diagram-container {
+  overflow: auto;
+  width: 100%;
+  height: calc(100vh - 130px);
+  cursor: grab;
+  background: #0d1117;
+  padding: 24px;
+}
+
+#diagram-container:active {
+  cursor: grabbing;
+}
+
+#diagram-wrapper {
+  display: inline-block;
+  transform-origin: top left;
+  transition: transform 0.1s ease;
+}
+
+.mermaid {
+  display: block;
+}
+
+/* make mermaid text more readable */
+.mermaid svg {
+  max-width: none !important;
+}
+
+footer {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  header { padding: 16px; }
+  header h1 { font-size: 1.1rem; }
+  .toolbar { padding: 8px 16px; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🏛️ West Virginia HB 2014 — Politicians, Conflicts & Connections</h1>
+  <p>
+    Power Generation and Consumption Act of 2025 (Certified Microgrid Program) — 
+    Interactive reference diagram covering legislators, votes, conflicts of interest, 
+    the Penzance / Berkeley County data center, FOIA investigations, and 2026 election implications.
+  </p>
+  <div class="meta">
+    <span class="badge badge-law">Signed into Law: April 30, 2025</span>
+    <span class="badge badge-ethics">⚠️ Hanshaw Conflict — Mar 16, 2026</span>
+    <span class="badge badge-foia">📄 FOIA Investigations Active</span>
+    <span class="badge badge-date">Updated: March 25, 2026</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <span>Zoom:</span>
+  <button onclick="zoom(-0.15)">−</button>
+  <span id="zoom-level">100%</span>
+  <button onclick="zoom(0.15)">+</button>
+  <button onclick="resetView()">Reset</button>
+  <button onclick="fitToWindow()">Fit to Window</button>
+  <button id="pan-btn" class="active" onclick="togglePan()">🖐 Pan Mode</button>
+  <span style="margin-left:auto; font-size:0.75rem; color:#484f58;">
+    Scroll to zoom · Drag to pan · Click links in nodes to open sources
+  </span>
+</div>
+
+<div id="diagram-container">
+  <div id="diagram-wrapper">
+    <div class="mermaid">
+flowchart TD
+
+```
+BILL["🏛️ West Virginia HB 2014&lt;br/&gt;Power Generation and Consumption Act of 2025&lt;br/&gt;Certified Microgrid Program&lt;br/&gt;Signed into Law: April 30, 2025&lt;br/&gt;🔗 legiscan.com/WV/bill/HB2014/2025&lt;br/&gt;🔗 wvlegislature.gov Bill Status"]
+
+BILL --&gt; SUPPORT["✅ SUPPORTERS"]
+BILL --&gt; OPPOSE["❌ OPPONENTS"]
+BILL --&gt; CONTROVERSY["⚠️ HANSHAW CONFLICT OF INTEREST"]
+BILL --&gt; PENZANCE_NODE["🏗️ PENZANCE / BERKELEY COUNTY PROJECT"]
+BILL --&gt; FOIA_NODE["📄 FOIA INVESTIGATIONS"]
+BILL --&gt; CIVIC_NODE["📋 CIVIC ANALYSIS &amp; LEGAL FRAMEWORK"]
+BILL --&gt; VOTES["📊 Final Vote Tallies&lt;br/&gt;House Roll 308: 88 YES – 12 NO&lt;br/&gt;House Roll 575: 82 YES – 16 NO&lt;br/&gt;Senate Roll 516: 32 YES – 1 NO&lt;br/&gt;Senate Roll 591: 32 YES – 1 NO&lt;br/&gt;Signed: April 30, 2025&lt;br/&gt;Effective: July 11, 2025&lt;br/&gt;🔗 legiscan.com/WV/bill/HB2014/2025&lt;br/&gt;🔗 open.pluralpolicy.com/vote/a541c851"]
+
+%% ── SUPPORTERS ──────────────────────────────────────────────
+SUPPORT --&gt; MORRISEY["Gov. Patrick Morrisey (R)&lt;br/&gt;'This is going to give West Virginia&lt;br/&gt;an opportunity to play big time on&lt;br/&gt;economic development projects.&lt;br/&gt;This is the economic development&lt;br/&gt;bill of the session.'&lt;br/&gt;🔗 theintelligencer.net/news/top-headlines/&lt;br/&gt;2025/04/west-virginia-house-senate-&lt;br/&gt;wrap-up-2025-legislative-session&lt;br/&gt;🔗 governor.wv.gov/article/governor-&lt;br/&gt;patrick-morrisey-industry-leaders-&lt;br/&gt;ask-legislature-pass-power-generation"]
+
+MORRISEY --&gt; MORRISEY_COI["⚠️ MORRISEY CONFLICTS OF INTEREST&lt;br/&gt;────────────────────&lt;br/&gt;1. PRIOR LOBBYING HISTORY&lt;br/&gt;Morrisey himself is a registered&lt;br/&gt;federal lobbyist on record.&lt;br/&gt;🔗 legistorm.com/person/bio/41452/&lt;br/&gt;Patrick_James_Morrisey.html&lt;br/&gt;────────────────────&lt;br/&gt;2. WIFE'S LOBBYING PRECEDENT&lt;br/&gt;While WV AG, wife Denise Morrisey&lt;br/&gt;lobbied Congress for Cardinal Health —&lt;br/&gt;WV's leading opioid supplier — while&lt;br/&gt;Morrisey's office oversaw lawsuit&lt;br/&gt;against that same company.&lt;br/&gt;Ethics board dismissed complaint.&lt;br/&gt;Cardinal Health paid $20M to settle.&lt;br/&gt;Pattern: family financial interests&lt;br/&gt;intersecting with official duties.&lt;br/&gt;🔗 wvgazettemail.com/news/politics/&lt;br/&gt;morriseys-wife-lobbied-on-opioids-&lt;br/&gt;for-drug-firm-disclosures-say/&lt;br/&gt;article_be3d9ee8-00e1-570c-b161&lt;br/&gt;────────────────────&lt;br/&gt;3. THREATENING CONSTITUENTS&lt;br/&gt;Katie McInnis — Morgan County:&lt;br/&gt;'Governor Morrisey has directly called&lt;br/&gt;people in my county threatening&lt;br/&gt;their jobs for speaking out&lt;br/&gt;about data centers.'&lt;br/&gt;🔗 panhandlenewsnetwork.com/2026/03/23/&lt;br/&gt;lots-of-questions-concerns-few-&lt;br/&gt;answers-during-data-center-town-hall&lt;br/&gt;────────────────────&lt;br/&gt;4. REVOLVING DOOR — ALEX MAYER&lt;br/&gt;Morrisey's DHS Secretary Alex Mayer&lt;br/&gt;left state govt March 2026 — less&lt;br/&gt;than 13 months on the job — to&lt;br/&gt;join Guidehouse as a director.&lt;br/&gt;Guidehouse had $348,000 state contract&lt;br/&gt;while Mayer was DHS Secretary.&lt;br/&gt;Guidehouse also worked with WV&lt;br/&gt;Office of Energy and Dept of Admin.&lt;br/&gt;🔗 wvmetronews.com/2026/03/19/&lt;br/&gt;state-official-who-just-left-lands-&lt;br/&gt;with-consultant-that-had-contract-&lt;br/&gt;for-foster-care-tour&lt;br/&gt;────────────────────&lt;br/&gt;5. IGNORED PUBLIC OPPOSITION&lt;br/&gt;FOIA docs showed 80+ public comments&lt;br/&gt;on Morrisey's own energy policy —&lt;br/&gt;more than two-thirds OPPOSED&lt;br/&gt;data centers. Morrisey proceeded&lt;br/&gt;anyway then signed HB 4983 sealing&lt;br/&gt;all future permit data as trade secrets.&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/article_43cef44e-&lt;br/&gt;734e-4c73-8de1-68760c770f0c.html&lt;br/&gt;────────────────────&lt;br/&gt;6. REBRANDING WITHOUT SUBSTANCE&lt;br/&gt;Directed officials to call data centers&lt;br/&gt;'intelligence centers' — a framing&lt;br/&gt;shift critics say obscures public debate&lt;br/&gt;with no change in actual function.&lt;br/&gt;🔗 westvirginiawatch.com/2026/02/26/&lt;br/&gt;d-c-based-real-estate-firm-investing-&lt;br/&gt;4b-for-new-data-center-development&lt;br/&gt;────────────────────&lt;br/&gt;7. NSCALE ANNOUNCED SAME DAY&lt;br/&gt;AS HANSHAW CONFLICT FILING&lt;br/&gt;March 16 2026 — same day Hanshaw&lt;br/&gt;filed for Fundamental Data — Morrisey&lt;br/&gt;announced Nscale expansion of Monarch&lt;br/&gt;Compute Campus in Mason County.&lt;br/&gt;Both events on first business day&lt;br/&gt;after legislative session ended.&lt;br/&gt;🔗 governor.wv.gov/allnews/all"]
+
+SUPPORT --&gt; RILEY["Del. Clay Riley (R-Harrison)&lt;br/&gt;House Finance Committee Vice Chair&lt;br/&gt;Co-Sponsor — Key data center proponent&lt;br/&gt;'The world doesn't know a lot of things&lt;br/&gt;about West Virginia. They look down&lt;br/&gt;on us. But we have the location,&lt;br/&gt;we have the energy, and we have the grit.'&lt;br/&gt;🔗 newsandsentinel.com/news/local-news/&lt;br/&gt;2025/04/scrambled-eggs-west-virginia-&lt;br/&gt;house-senate-wrap-up-2025-legislative-session&lt;br/&gt;🎯 wvwatch.org: Key data center proponent"]
+
+SUPPORT --&gt; FEHRENBACHER["Del. Bob Fehrenbacher (R-11)&lt;br/&gt;Co-Sponsor&lt;br/&gt;🔗 wvlegislature.gov/Bill_Text_HTML/&lt;br/&gt;2025_SESSIONS/RS/bills/&lt;br/&gt;hb2014 sub1 enr.pdf"]
+
+SUPPORT --&gt; POWELL["Jay Powell&lt;br/&gt;Pleasants County Commission President&lt;br/&gt;'We as a Pleasant County Commission&lt;br/&gt;are highly in favor of this Bill.&lt;br/&gt;House Bill 2014 could be tremendous&lt;br/&gt;for the state of West Virginia.'&lt;br/&gt;🔗 wtap.com/2025/04/10/officials-discuss-&lt;br/&gt;passing-house-bill-2014-it-moves-&lt;br/&gt;into-wv-senate"]
+
+%% ── OPPONENTS ───────────────────────────────────────────────
+OPPOSE --&gt; PUSHKIN["Del. Mike Pushkin (D-Kanawha)&lt;br/&gt;'It could potentially cause our utility&lt;br/&gt;rates to go even higher. None of our&lt;br/&gt;neighboring states that have these&lt;br/&gt;data centers have passed this type&lt;br/&gt;of legislation.'&lt;br/&gt;🔗 wtap.com/2025/04/10/officials-discuss-&lt;br/&gt;passing-house-bill-2014-it-moves-&lt;br/&gt;into-wv-senate"]
+
+OPPOSE --&gt; BRIDGES["Del. Jordan Bridges (R-Logan)&lt;br/&gt;'I voted against the bill because&lt;br/&gt;AEP testified they would have to&lt;br/&gt;pass along increased electricity costs&lt;br/&gt;to the ratepayers no matter what.'&lt;br/&gt;🔗 wtap.com/2025/04/10/officials-discuss-&lt;br/&gt;passing-house-bill-2014-it-moves-&lt;br/&gt;into-wv-senate"]
+
+OPPOSE --&gt; GEARHEART["Del. Marty Gearheart (R-Mercer)&lt;br/&gt;Voted NO on HB 2014&lt;br/&gt;🔗 westvirginiawatch.com/2025/04/01/&lt;br/&gt;wv-house-passes-amended-version-of-&lt;br/&gt;morriseys-microgrid-data-center-bill"]
+
+OPPOSE --&gt; FLANIGAN["Del. Bill Flanigan (R-Ohio County)&lt;br/&gt;Voted NO on HB 2014&lt;br/&gt;🔗 westvirginiawatch.com/2025/04/01/&lt;br/&gt;wv-house-passes-amended-version-of-&lt;br/&gt;morriseys-microgrid-data-center-bill"]
+
+OPPOSE --&gt; PHILLIPS["Sen. Rupie Phillips (R-Logan)&lt;br/&gt;LONE Senate NO vote (32-1)&lt;br/&gt;Cited electric rate increases&lt;br/&gt;and local control concerns&lt;br/&gt;🔗 legiscan.com/WV/bill/HB2014/2025&lt;br/&gt;🔗 wvpublic.org/senate-committee-&lt;br/&gt;carves-out-microgrid-tax-revenue-&lt;br/&gt;for-counties"]
+
+OPPOSE --&gt; GOCHENOUR["🐒 Eddie Gochenour (R)&lt;br/&gt;Berkeley County Commission President&lt;br/&gt;────────────────────&lt;br/&gt;OPPOSED HB 2014 during session:&lt;br/&gt;Led county fight against bill's&lt;br/&gt;revenue provisions stripping local tax.&lt;br/&gt;'We will fight like the last&lt;br/&gt;monkey on the ark.'&lt;br/&gt;🔗 datacenterwatch.org/newsletter/&lt;br/&gt;czuuq89s840knvh3mjgznsoo0bxrhr&lt;br/&gt;────────────────────&lt;br/&gt;⚠️ FLIP-FLOP after Penzance announced:&lt;br/&gt;'This is really a fantastic opportunity&lt;br/&gt;we've never had before. Some&lt;br/&gt;unanswered questions but very confident&lt;br/&gt;they're going to be a great partner.'&lt;br/&gt;🔗 wvmetronews.com/2026/02/26/&lt;br/&gt;governor-announces-a-developer-&lt;br/&gt;for-big-west-virginia-data-center-spot&lt;br/&gt;────────────────────&lt;br/&gt;Town hall bombshell — commissioners&lt;br/&gt;only learned days before announcement:&lt;br/&gt;'They called us on a Friday and said&lt;br/&gt;hey can you meet on Monday?&lt;br/&gt;So that's how fast that happened.'&lt;br/&gt;'This was the governor's bill.&lt;br/&gt;In doing so the bill removed&lt;br/&gt;all local control.'&lt;br/&gt;🔗 journal-news.net/news/business_and_economy/&lt;br/&gt;unanswered-questions-linger-over-&lt;br/&gt;bedington-data-center-project/&lt;br/&gt;article_3d8d5015-bd03-53f8-aa72&lt;br/&gt;────────────────────&lt;br/&gt;Mar 20 2026: Hosted 500+ resident&lt;br/&gt;town hall at Spring Mills High School&lt;br/&gt;Answered NO questions directly.&lt;br/&gt;All referred to Penzance and&lt;br/&gt;Governor's office.&lt;br/&gt;Appeared on WRNR radio&lt;br/&gt;🔗 therealwv.com/2026/03/23/locals-&lt;br/&gt;speak-out-against-4-billion-data-&lt;br/&gt;center-in-berkeley-county&lt;br/&gt;🔗 berkeleywv.org/AgendaCenter/&lt;br/&gt;ViewFile/Minutes/_08282025-1378&lt;br/&gt;────────────────────&lt;br/&gt;🗳️ Running May 12 2026 primary&lt;br/&gt;Challenger: Ken Mattson (R Inwood)&lt;br/&gt;🔗 berkeleywv.org/m/newsflash/Home/Detail/200&lt;br/&gt;🔗 ballotpedia.org/Darren_Thorne"]
+
+GOCHENOUR --&gt;|"FLIP-FLOP ⚠️"| PENZANCE_NODE
+
+%% ── HANSHAW CONFLICT ─────────────────────────────────────────
+CONTROVERSY --&gt; HANSHAW_MAIN["Del. Roger Hanshaw (R-62)&lt;br/&gt;🏛️ WV House Speaker — Primary Sponsor&lt;br/&gt;Attorney, Bowles Rice LLC Charleston&lt;br/&gt;PhD Chemistry, Notre Dame&lt;br/&gt;2024 state salary: ~$49,000&lt;br/&gt;Voted YES: HB 2014 and HB 4983&lt;br/&gt;HB 4983: Made all data center permit&lt;br/&gt;applications confidential (2026)&lt;br/&gt;Proposed bill to exempt Legislature&lt;br/&gt;from WV Freedom of Information Act&lt;br/&gt;🔗 mountainstatespotlight.org/2025/03/28/&lt;br/&gt;gop-foia-exemption-legislature&lt;br/&gt;🔗 ballotpedia.org/Roger_Hanshaw&lt;br/&gt;🔗 wvmetronews.com/2026/03/24/&lt;br/&gt;did-hanshaw-violate-ethics-in-&lt;br/&gt;representing-developer"]
+
+HANSHAW_MAIN --&gt; TIMELINE["📅 KEY TIMELINE&lt;br/&gt;Mar 18 2025 — Introduces HB 2014&lt;br/&gt;Apr 12 2025 — Votes YES, bill passes&lt;br/&gt;Apr 30 2025 — Morrisey signs&lt;br/&gt;2026 session — Votes YES HB 4983&lt;br/&gt;sealing all permit data as trade secrets&lt;br/&gt;Mar 14 2026 — Session gavels out&lt;br/&gt;Mar 16 2026 — TWO DAYS LATER&lt;br/&gt;Files as legal counsel for&lt;br/&gt;Fundamental Data LLC at WV ICA&lt;br/&gt;🔗 countryroads.substack.com/p/&lt;br/&gt;wv-house-speaker-hired-to-represent&lt;br/&gt;🔗 legalnewsline.com/pennsylvania-record/&lt;br/&gt;west-virginia-record/hanshaw-&lt;br/&gt;representing-data-center-company-&lt;br/&gt;in-ica-case/article_4cee2215"]
+
+HANSHAW_MAIN --&gt; FUNDAMENTAL["⚖️ Fundamental Data LLC&lt;br/&gt;Purcellville VA-based company&lt;br/&gt;Seeking to build large power plant&lt;br/&gt;and data center in Tucker County&lt;br/&gt;Hanshaw + 2 Bowles Rice attorneys&lt;br/&gt;appear at WV Intermediate Court&lt;br/&gt;of Appeals — challenging state&lt;br/&gt;air quality permit — Mar 16 2026&lt;br/&gt;🔗 wboy.com/news/tucker/wvs-speaker-&lt;br/&gt;of-the-house-takes-on-controversial-&lt;br/&gt;data-center-client&lt;br/&gt;🔗 legalnewsline.com/pennsylvania-record/&lt;br/&gt;west-virginia-record/hanshaw-&lt;br/&gt;representing-data-center-company-&lt;br/&gt;in-ica-case/article_4cee2215"]
+
+HANSHAW_MAIN --&gt; ETHICS["🚨 Ethics Watchdog Reaction&lt;br/&gt;Craig Holman — Public Citizen:&lt;br/&gt;'An obvious conflict of interest.&lt;br/&gt;He is pulling in a fortune representing&lt;br/&gt;that client while working on&lt;br/&gt;legislation to benefit that client.'&lt;br/&gt;🔗 countryroads.substack.com/p/&lt;br/&gt;wv-house-speaker-hired-to-represent&lt;br/&gt;────────────────────&lt;br/&gt;Julie Archer — WV Citizen Action Group:&lt;br/&gt;'A glaring conflict of interest.&lt;br/&gt;Even if it is not illegal, it should&lt;br/&gt;be, and it looks really bad.'&lt;br/&gt;🔗 countryroads.substack.com/p/&lt;br/&gt;wv-house-speaker-hired-to-represent&lt;br/&gt;────────────────────&lt;br/&gt;Nikki Forrester — Tucker United:&lt;br/&gt;'Unethical and a blatant conflict&lt;br/&gt;of interest.'&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/article_43cef44e-&lt;br/&gt;734e-4c73-8de1-68760c770f0c.html&lt;br/&gt;────────────────────&lt;br/&gt;⚠️ Technically LEGAL — House rules&lt;br/&gt;void conflict code when legislation&lt;br/&gt;affects 5 or more parties&lt;br/&gt;🔗 legalnewsline.com/pennsylvania-record/&lt;br/&gt;west-virginia-record/hanshaw-&lt;br/&gt;representing-data-center-company-&lt;br/&gt;in-ica-case/article_4cee2215"]
+
+FUNDAMENTAL --&gt; TUCKER["📍 Tucker County Community&lt;br/&gt;Local pushback over lack of transparency&lt;br/&gt;Harvard T.H. Chan Dominici Lab:&lt;br/&gt;Projects $19M–$35M in health-related&lt;br/&gt;damages if facility runs as permitted&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/article_43cef44e-&lt;br/&gt;734e-4c73-8de1-68760c770f0c.html&lt;br/&gt;────────────────────&lt;br/&gt;HB 4983 (2026) — Hanshaw YES:&lt;br/&gt;All data center permit applications&lt;br/&gt;now confidential as trade secrets&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/morrisey-&lt;br/&gt;administration-penzance-wont-give-&lt;br/&gt;basic-berkeley-county-project-details/&lt;br/&gt;article_271d281d-fcf7-445e-9e3d"]
+
+%% ── PENZANCE / BERKELEY COUNTY ──────────────────────────────
+PENZANCE_NODE --&gt; PENZANCE["🏢 Penzance Management&lt;br/&gt;DC-based — Founded 1996&lt;br/&gt;Co-founders: Victor Tolkan and&lt;br/&gt;Julia Springer — woman-owned firm&lt;br/&gt;$4.5B+ gross assets managed&lt;br/&gt;$1.1B+ discretionary capital&lt;br/&gt;Institutional investor base&lt;br/&gt;Funds I II and III&lt;br/&gt;🔗 pzre.com/firm&lt;br/&gt;────────────────────&lt;br/&gt;AWS PARTNERSHIP — CHANTILLY VA&lt;br/&gt;45MW 240K sq ft facility&lt;br/&gt;Fully leased to Amazon Web Services&lt;br/&gt;Groundbreaking: Nov 21 2025&lt;br/&gt;Completion: first half 2027&lt;br/&gt;$100M construction financing&lt;br/&gt;LEED Silver certified&lt;br/&gt;Air-cooled 95% of year&lt;br/&gt;67 acres PUBLIC green space&lt;br/&gt;Community walking trails&lt;br/&gt;Acoustically enclosed generators&lt;br/&gt;🔗 datacenterdynamics.com/en/news/&lt;br/&gt;penzance-secures-aws-as-tenant-&lt;br/&gt;for-45mw-data-center-in-chantilly&lt;br/&gt;🔗 businesswire.com/news/home/&lt;br/&gt;20251121526101&lt;br/&gt;────────────────────&lt;br/&gt;⚠️ FAIRFAX VA vs BERKELEY WV&lt;br/&gt;KEY CONTRAST:&lt;br/&gt;Fairfax VA with AWS:&lt;br/&gt;67 acres public green space&lt;br/&gt;walking trails environmental restoration&lt;br/&gt;LEED Silver certification&lt;br/&gt;full public disclosure&lt;br/&gt;community benefit commitments&lt;br/&gt;noise mitigation standards disclosed&lt;br/&gt;🔗 fairfaxcountyeda.org/fairfax-county-&lt;br/&gt;penzance-officials-break-ground&lt;br/&gt;Berkeley WV without AWS:&lt;br/&gt;Environmental studies WILL NOT&lt;br/&gt;be made public under HB 4983&lt;br/&gt;No public green space commitment&lt;br/&gt;No LEED certification required&lt;br/&gt;Tenant identity STILL UNKNOWN&lt;br/&gt;No noise mitigation standards disclosed&lt;br/&gt;Water usage plans sealed as trade secrets&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/morrisey-&lt;br/&gt;administration-penzance-wont-give-&lt;br/&gt;basic-berkeley-county-project-details/&lt;br/&gt;article_271d281d-fcf7-445e-9e3d&lt;br/&gt;────────────────────&lt;br/&gt;FOIA EXPOSES EXCESSIVE SECRECY&lt;br/&gt;Gazette-Mail FOIA for Penzance&lt;br/&gt;certification docs — Commerce Dept&lt;br/&gt;confirmed existence but REFUSED all&lt;br/&gt;substantive detail. Provided only&lt;br/&gt;a Feb 18 agency letter confirming&lt;br/&gt;90 MW threshold was met.&lt;br/&gt;ALL of the following sealed under&lt;br/&gt;HB 4983 as trade secrets:&lt;br/&gt;Economic and financial data&lt;br/&gt;Engineering studies&lt;br/&gt;Environmental impact assessments&lt;br/&gt;Proximity to schools churches homes&lt;br/&gt;Water usage and mitigation plans&lt;br/&gt;Completion timeline and milestones&lt;br/&gt;HB 4983 signed AFTER Gazette-Mail&lt;br/&gt;filed FOIA — closing the window&lt;br/&gt;Hanshaw voted YES on HB 4983&lt;br/&gt;two days before taking Fundamental&lt;br/&gt;Data LLC as private client&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/morrisey-&lt;br/&gt;administration-penzance-wont-give-&lt;br/&gt;basic-berkeley-county-project-details/&lt;br/&gt;article_271d281d-fcf7-445e-9e3d&lt;br/&gt;────────────────────&lt;br/&gt;ELECTRIC RATE WARNING&lt;br/&gt;Bloomberg fall 2025: areas near&lt;br/&gt;data centers saw electric rates&lt;br/&gt;rise by more than 250%&lt;br/&gt;AEP testified during HB 2014 debate&lt;br/&gt;that ratepayer cost increases&lt;br/&gt;could not be avoided&lt;br/&gt;WV American Water just approved&lt;br/&gt;~$13/month rate hike for Berkeley&lt;br/&gt;County residents — before any&lt;br/&gt;data center impact is felt&lt;br/&gt;🔗 therealwv.com/2026/02/27/&lt;br/&gt;morrisey-announces-4-billion-data-&lt;br/&gt;center-coming-to-berkeley-county&lt;br/&gt;🔗 wvgazettemail.com/news/energy_and_&lt;br/&gt;environment/wvaw-bills-going-up-&lt;br/&gt;after-psc-approves-eight-figure-&lt;br/&gt;revenue-increase/article_7e14c0b2&lt;br/&gt;────────────────────&lt;br/&gt;Feb 26 2026: Morrisey announces $4B&lt;br/&gt;investment — WV first certified&lt;br/&gt;High Impact Intelligence Center&lt;br/&gt;548 acres Falling Waters District&lt;br/&gt;Bedington Berkeley County&lt;br/&gt;1.9M sq ft at full buildout&lt;br/&gt;600 megawatts IT capacity&lt;br/&gt;Grid-connected — NOT independent&lt;br/&gt;microgrid despite being certified&lt;br/&gt;under the microgrid program&lt;br/&gt;🔗 wvmetronews.com/2026/02/26/&lt;br/&gt;governor-announces-a-developer-&lt;br/&gt;for-big-west-virginia-data-center-spot&lt;br/&gt;🔗 westvirginiawatch.com/2026/02/26/&lt;br/&gt;d-c-based-real-estate-firm-investing-&lt;br/&gt;4b-for-new-data-center-development"]
+
+PENZANCE --&gt; ECON["💰 Economic Projections — UNREALIZED&lt;br/&gt;~1,000 construction jobs temporary&lt;br/&gt;125 permanent full-time positions&lt;br/&gt;No state funding used&lt;br/&gt;🔗 westvirginia.gov/4-billion-data-&lt;br/&gt;center-campus-planned-for-berkeley-&lt;br/&gt;county-positioning-west-virginia-&lt;br/&gt;for-the-ai-and-cloud-economy&lt;br/&gt;────────────────────&lt;br/&gt;⚠️ FUTURE PROMISES — NOT REALIZED&lt;br/&gt;Revenue split is written into statute&lt;br/&gt;but NO data centers are operational&lt;br/&gt;under HB 2014. Penzance has NOT&lt;br/&gt;broken ground. Zero revenue has&lt;br/&gt;flowed to any fund. No income tax&lt;br/&gt;reduction has occurred.&lt;br/&gt;🔗 wvpolicy.org/hb-2014-would-preempt-&lt;br/&gt;local-control-divert-millions-annually&lt;br/&gt;────────────────────&lt;br/&gt;Projected split IF ever operational:&lt;br/&gt;50% → Personal Income Tax Reduction Fund&lt;br/&gt;Only triggers income tax cuts after&lt;br/&gt;fund accumulates enough under&lt;br/&gt;WV Code §11-21-4h — a multi-step&lt;br/&gt;process with no guaranteed timeline&lt;br/&gt;30% → Berkeley County directly&lt;br/&gt;10% → All WV counties per capita&lt;br/&gt;5% → Electric Grid Stabilization Fund&lt;br/&gt;5% → Economic Enhancement Grant Fund&lt;br/&gt;────────────────────&lt;br/&gt;Formula still contested — SB 652&lt;br/&gt;introduced Jan 28 2026 would flip&lt;br/&gt;formula to 80% back to host county&lt;br/&gt;🔗 wvlegislature.gov/bill_status/&lt;br/&gt;bills_text.cfm?billdoc=sb652+intr.htm&lt;br/&gt;────────────────────&lt;br/&gt;HB 4013 Mountaineer Flexible Tax&lt;br/&gt;Credit Act 2026 would give data&lt;br/&gt;centers massive STATE tax breaks&lt;br/&gt;on top — meaning neither counties&lt;br/&gt;NOR state collect meaningful revenue&lt;br/&gt;WV Center on Budget and Policy:&lt;br/&gt;'Now not only will counties not see&lt;br/&gt;the tax benefits but the state&lt;br/&gt;will not either.'&lt;br/&gt;🔗 wvpolicy.org/house-moving-tax-&lt;br/&gt;credit-bill-with-big-tax-break-&lt;br/&gt;for-new-data-centers&lt;br/&gt;🔗 westvirginiawatch.com/2025/04/30/&lt;br/&gt;morrisey-signs-priority-bill-meant-&lt;br/&gt;to-incentivize-data-centers"]
+
+PENZANCE --&gt; ENV["🌊 Environmental Concerns&lt;br/&gt;Data centers use up to 5M gallons&lt;br/&gt;of drinking water daily for cooling&lt;br/&gt;🔗 doi.org/10.1038/s41558-023-01750-1&lt;br/&gt;Mytton 2023 Nature Climate Change&lt;br/&gt;────────────────────&lt;br/&gt;Food and Water Watch 2024:&lt;br/&gt;Nationwide DC water use tripled&lt;br/&gt;2014–2023. Projected 720 billion&lt;br/&gt;gallons/year by 2028 for AI alone.&lt;br/&gt;🔗 foodandwaterwatch.org&lt;br/&gt;────────────────────&lt;br/&gt;Berkeley County: Eastern Panhandle&lt;br/&gt;hit D3 extreme drought conditions&lt;br/&gt;Reclaimed water option identified&lt;br/&gt;but details will NOT be public&lt;br/&gt;under current regulations&lt;br/&gt;🔗 therealwv.com/2026/03/23/locals-&lt;br/&gt;speak-out-against-4-billion-data-&lt;br/&gt;center-in-berkeley-county&lt;br/&gt;🔗 wvgazettemail.com/news/legislative_session/&lt;br/&gt;morrisey-administration-penzance-wont-give-&lt;br/&gt;basic-berkeley-county-project-details/&lt;br/&gt;article_271d281d-fcf7-445e-9e3d"]
+
+PENZANCE --&gt; COMMUNITY["👥 Community Response&lt;br/&gt;930+ public comments Dec 2025&lt;br/&gt;opposing data center development&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/article_43cef44e&lt;br/&gt;────────────────────&lt;br/&gt;Mar 20 2026: Town hall at&lt;br/&gt;Spring Mills High School&lt;br/&gt;500+ attendees — seats filled&lt;br/&gt;people standing along walls&lt;br/&gt;Berkeley County + Eastern Panhandle&lt;br/&gt;Virginia and Maryland residents&lt;br/&gt;Originally planned for small&lt;br/&gt;Bedington Ruritan Club — moved&lt;br/&gt;due to overwhelming interest&lt;br/&gt;────────────────────&lt;br/&gt;KEY REVELATIONS AT TOWN HALL:&lt;br/&gt;Gochenour: 'They called us on a&lt;br/&gt;Friday and said hey can you meet&lt;br/&gt;on Monday? So that's how fast&lt;br/&gt;that happened.'&lt;br/&gt;Gochenour: 'This was the governor's&lt;br/&gt;bill. In doing so the bill that was&lt;br/&gt;approved removed all local control.'&lt;br/&gt;Hardy: 'I have questions I have&lt;br/&gt;concerns. I'm a little angry too.&lt;br/&gt;The county commission doesn't have&lt;br/&gt;any oversight of this project.'&lt;br/&gt;Hardy: 'Don't shoot the messenger.&lt;br/&gt;This is state level out of the&lt;br/&gt;governor's office. We had no say.'&lt;br/&gt;────────────────────&lt;br/&gt;Resident John: Research shows&lt;br/&gt;planning for this data center&lt;br/&gt;in Berkeley County goes back&lt;br/&gt;to 2023 — before HB 2014 passed.&lt;br/&gt;'Clearly this is a plan that's&lt;br/&gt;been in the work for a while.'&lt;br/&gt;────────────────────&lt;br/&gt;Katie McInnis — Morgan County&lt;br/&gt;admin No Data Centers in EP:&lt;br/&gt;'Governor Morrisey has directly&lt;br/&gt;called people in my county&lt;br/&gt;threatening their jobs for&lt;br/&gt;speaking out about this.'&lt;br/&gt;────────────────────&lt;br/&gt;David Pallente — resident:&lt;br/&gt;'We've had a data center dumped&lt;br/&gt;on our heads. We had no transparency.'&lt;br/&gt;Christopher Breeze — resident:&lt;br/&gt;'Eminent domain is supposed to be&lt;br/&gt;for projects that benefit the public&lt;br/&gt;not benefit private corporations.'&lt;br/&gt;Bryan McKinney — US Senate candidate:&lt;br/&gt;Would present referendum of secession&lt;br/&gt;to legislature to restore local control.&lt;br/&gt;────────────────────&lt;br/&gt;Commissioners answered NO questions&lt;br/&gt;directly — all logged for referral&lt;br/&gt;to Penzance and Governor's office.&lt;br/&gt;Speaker list exceeded time available.&lt;br/&gt;🔗 journal-news.net/news/business_and_economy/&lt;br/&gt;unanswered-questions-linger-over-&lt;br/&gt;bedington-data-center-project/&lt;br/&gt;article_3d8d5015-bd03-53f8-aa72&lt;br/&gt;🔗 wvmetronews.com/2026/03/23/&lt;br/&gt;public-speaks-out-on-data-center-&lt;br/&gt;planned-for-falling-waters-area&lt;br/&gt;🔗 therealwv.com/2026/03/23/locals-&lt;br/&gt;speak-out-against-4-billion-data-&lt;br/&gt;center-in-berkeley-county&lt;br/&gt;🔗 panhandlenewsnetwork.com/2026/03/23/&lt;br/&gt;lots-of-questions-concerns-few-&lt;br/&gt;answers-during-data-center-town-hall"]
+
+PENZANCE --&gt; WRNR["📻 WRNR AM 740 / FM 106.5&lt;br/&gt;Talk Radio — Martinsburg WV&lt;br/&gt;Only locally owned station&lt;br/&gt;in the Eastern Panhandle&lt;br/&gt;Since 1976 — Owner: Mike Hornby&lt;br/&gt;────────────────────&lt;br/&gt;⚠️ CONFLICT: Mike Hornby is also&lt;br/&gt;Delegate Mike Hornby (HD 93)&lt;br/&gt;who voted YES on HB 2014&lt;br/&gt;and is listed UNCONTESTED&lt;br/&gt;in the 2026 primary&lt;br/&gt;────────────────────&lt;br/&gt;Key show: Eastern Panhandle Talk&lt;br/&gt;with Rob Mario — weekdays 8-10 AM&lt;br/&gt;Regularly features elected officials&lt;br/&gt;and candidates on data center issues&lt;br/&gt;Berkeley County Commission confirmed&lt;br/&gt;appearances on WRNR (Aug 2025&lt;br/&gt;Commission minutes: Gochenour&lt;br/&gt;and Catlett appeared on WRNR)&lt;br/&gt;────────────────────&lt;br/&gt;Related: WEPM/WCST Panhandle Live&lt;br/&gt;Commissioner Hardy interviewed&lt;br/&gt;Mar 18 2026 ahead of town hall:&lt;br/&gt;'I have questions I have concerns.&lt;br/&gt;I'm a little angry too. The county&lt;br/&gt;control is circumvented. There's&lt;br/&gt;not much the county can do.&lt;br/&gt;It's all run from the state level.'&lt;br/&gt;'People get very upset when their&lt;br/&gt;power is taken from them.'&lt;br/&gt;🔗 talkradiowrnr.com&lt;br/&gt;🔗 panhandlenewsnetwork.com/2026/03/18/&lt;br/&gt;commissioner-hardy-talks-about-&lt;br/&gt;town-hall-style-meetingto-discuss-&lt;br/&gt;large-berkeley-county-data-center&lt;br/&gt;🔗 berkeleywv.org/AgendaCenter/&lt;br/&gt;ViewFile/Minutes/_08282025-1378&lt;br/&gt;🔗 facebook.com/talkradiowrnr"]
+
+WRNR --&gt; JARVIS["🎙️ Dennis Jarvis — WRNR Interview&lt;br/&gt;Jefferson County Development Authority&lt;br/&gt;Executive Director&lt;br/&gt;Appeared on Eastern Panhandle Talk&lt;br/&gt;with Rob Mario and David Welch&lt;br/&gt;🔗 facebook.com/Jefferson-County-&lt;br/&gt;Development-Authority-220953798047331/&lt;br/&gt;videos/3684045668363272&lt;br/&gt;────────────────────&lt;br/&gt;⚠️ KEY CLAIM at timestamp 18:40:&lt;br/&gt;When WV reaches 30 GW microgrid&lt;br/&gt;capacity the personal income tax&lt;br/&gt;revenue would go to ZERO —&lt;br/&gt;data center property tax revenue&lt;br/&gt;alone would fully eliminate&lt;br/&gt;the personal income tax&lt;br/&gt;────────────────────&lt;br/&gt;Why this claim is extraordinary:&lt;br/&gt;WV currently produces ~15 GW total&lt;br/&gt;Morrisey 50x50 plan targets&lt;br/&gt;50 GW by 2050 — 30 GW requires&lt;br/&gt;a massive hypothetical buildout&lt;br/&gt;No data centers operational yet&lt;br/&gt;Zero revenue in the fund to date&lt;br/&gt;🔗 theintelligencer.net/news/top-headlines/&lt;br/&gt;2025/12/morrisey-looks-back-on-2025&lt;br/&gt;────────────────────&lt;br/&gt;FURTHER UNDERMINED: Income tax&lt;br/&gt;already being cut via separate laws&lt;br/&gt;with NO connection to data centers:&lt;br/&gt;2023 HB 2526: -21.25% income tax&lt;br/&gt;Trigger cuts 2025: further -4%&lt;br/&gt;Special session 2025: -2% more&lt;br/&gt;2026 session: -5% cut passed&lt;br/&gt;Cumulative cut since 2023: 32.2%&lt;br/&gt;~$1.2B saved — NONE from data centers&lt;br/&gt;🔗 wvmetronews.com/2026/03/24/&lt;br/&gt;morrisey-takes-the-tax-cut-win-&lt;br/&gt;but-need-growth-for-future-wins&lt;br/&gt;────────────────────&lt;br/&gt;Pasha Madji — Jefferson County&lt;br/&gt;Commission President testified&lt;br/&gt;AGAINST HB 2014 in Senate committee:&lt;br/&gt;'These commercial property tax&lt;br/&gt;revenues are a key tool to balance&lt;br/&gt;the budget and pay for emergency&lt;br/&gt;services — ambulances police and&lt;br/&gt;first responders. This leaves counties&lt;br/&gt;with fewer resources.'&lt;br/&gt;🔗 wvpublic.org/senate-committee-&lt;br/&gt;carves-out-microgrid-tax-revenue-&lt;br/&gt;for-counties"]
+
+PENZANCE --&gt; GARY["💧 Gary City — McDowell County WV&lt;br/&gt;Systemic water crisis example:&lt;br/&gt;Residents face contaminated water&lt;br/&gt;with iron and manganese&lt;br/&gt;Aging infrastructure beyond repair&lt;br/&gt;Community reliant on bottled water&lt;br/&gt;Data center revenue framework&lt;br/&gt;COULD fund statewide water needs&lt;br/&gt;but only with proper oversight&lt;br/&gt;and enforceable safeguards&lt;br/&gt;🔗 westvirginiawatch.com/2025/12/08/&lt;br/&gt;public-comment-period-for-proposed-&lt;br/&gt;rules-on-wv-data-center-microgrid&lt;br/&gt;🔗 wvpolicy.org/hb-2014-would-preempt-&lt;br/&gt;local-control-divert-millions-annually"]
+
+%% ── FOIA INVESTIGATIONS ──────────────────────────────────────
+FOIA_NODE --&gt; FOIA1["📰 Gazette-Mail FOIA 1&lt;br/&gt;Energy Policy Public Comments&lt;br/&gt;Source: WV Dept. of Commerce&lt;br/&gt;80+ comments — more than two-thirds&lt;br/&gt;OPPOSED data centers or transmission&lt;br/&gt;Residents cited: eminent domain fears&lt;br/&gt;property value drops deforestation&lt;br/&gt;water concerns noise pollution&lt;br/&gt;Many submitted on Christmas Day&lt;br/&gt;ahead of Dec 26 state deadline&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/more-local-control-&lt;br/&gt;loss-conflict-of-interest-concerns-&lt;br/&gt;loom-in-wv-data-center-fight/&lt;br/&gt;article_43cef44e-734e-4c73-8de1"]
+
+FOIA_NODE --&gt; FOIA2["📰 Gazette-Mail FOIA 2&lt;br/&gt;Penzance High-Impact Certification&lt;br/&gt;Source: WV Dept. of Commerce&lt;br/&gt;Requested documents supporting&lt;br/&gt;Penzance application — Commerce Dept.&lt;br/&gt;confirmed existence but REFUSED&lt;br/&gt;to provide basic project details&lt;br/&gt;Provided only Feb 18 agency letter&lt;br/&gt;Key details REDACTED under&lt;br/&gt;HB 4983 trade secret exemption —&lt;br/&gt;the very law Hanshaw voted for&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/morrisey-&lt;br/&gt;administration-penzance-wont-give-&lt;br/&gt;basic-berkeley-county-project-details/&lt;br/&gt;article_271d281d-fcf7-445e-9e3d"]
+
+FOIA_NODE --&gt; FOIA3["📋 Citizen FOIA Request&lt;br/&gt;Filed: March 21 2026&lt;br/&gt;Recipients: WV Dept. of Commerce&lt;br/&gt;Secretary Dr. Matthew Herridge&lt;br/&gt;General Counsel Garner Marks&lt;br/&gt;Deputy Sec. Christine H. Davies&lt;br/&gt;Deputy Sec. Nicholas Preservati&lt;br/&gt;Sought: Economic impact studies&lt;br/&gt;HB 2014 compliance documentation&lt;br/&gt;Job creation projections wage data&lt;br/&gt;Tax revenue calculations&lt;br/&gt;All communications with Penzance&lt;br/&gt;Financial sustainability analyses&lt;br/&gt;Cited WV Code 29B-1-1:&lt;br/&gt;Officials cannot hide information&lt;br/&gt;from the people they serve&lt;br/&gt;Status: Awaiting 5-day response&lt;br/&gt;🔗 code.wvlegislature.gov/email/29B&lt;br/&gt;🔗 wvgazettemail.com/news/&lt;br/&gt;legislative_session/morrisey-&lt;br/&gt;administration-penzance-wont-give-&lt;br/&gt;basic-berkeley-county-project-details/&lt;br/&gt;article_271d281d-fcf7-445e-9e3d"]
+
+FOIA2 --&gt; TRANSPARENCY["🔒 Transparency Blocked by HB 4983&lt;br/&gt;All data center petitions and&lt;br/&gt;letters of intent now CONFIDENTIAL&lt;br/&gt;The same data Gazette-Mail sought&lt;br/&gt;via FOIA is sealed by statute&lt;br/&gt;WV Code 29B-1-1 makes clear this&lt;br/&gt;is a constitutional crisis:&lt;br/&gt;'The people do not give their&lt;br/&gt;public servants the right to decide&lt;br/&gt;what is good for the people&lt;br/&gt;to know and what is not.'&lt;br/&gt;Hanshaw also proposed exempting&lt;br/&gt;Legislature from FOIA entirely&lt;br/&gt;🔗 mountainstatespotlight.org/2025/03/28/&lt;br/&gt;gop-foia-exemption-legislature&lt;br/&gt;🔗 wvgazettemail.com/opinion/editorial/&lt;br/&gt;gazette-mail-editorial-wv-lawmakers-&lt;br/&gt;insulating-themselves-on-data-centers/&lt;br/&gt;article_fafc5c94-de59-41ba-84fa"]
+
+%% ── BLOG ANALYSIS ────────────────────────────────────────────
+CIVIC_NODE --&gt; LEGAL["⚖️ Legal Challenges — WV &amp; Federal Law&lt;br/&gt;Sources: WV Code, OSHA, Federal Courts&lt;br/&gt;────────────────────&lt;br/&gt;1. Contested Case Hearings&lt;br/&gt;W.Va. Code 29A-5-4&lt;br/&gt;File for water withdrawal permits&lt;br/&gt;air quality construction permits&lt;br/&gt;🔗 law.justia.com/codes/west-virginia/&lt;br/&gt;chapter-29a/article-5/section-29a-5-4&lt;br/&gt;────────────────────&lt;br/&gt;2. FOIA Enforcement&lt;br/&gt;Attorney fee recovery 29B-1-7&lt;br/&gt;5-day agency response window&lt;br/&gt;🔗 law.justia.com/codes/west-virginia/&lt;br/&gt;chapter-29b/article-1/section-29b-1-7&lt;br/&gt;────────────────────&lt;br/&gt;3. Federal Civil Rights&lt;br/&gt;42 U.S.C. 1983 — sue state officials&lt;br/&gt;violating constitutional rights&lt;br/&gt;────────────────────&lt;br/&gt;4. Federal OSHA Preemption&lt;br/&gt;29 CFR 1910.95 noise limits 90dB&lt;br/&gt;29 CFR 1910.305 lighting/electrical&lt;br/&gt;State cannot override federal&lt;br/&gt;worker safety standards&lt;br/&gt;🔗 osha.gov/laws-regs/regulations/&lt;br/&gt;standardnumber/1910/1910.95&lt;br/&gt;────────────────────&lt;br/&gt;5. Clean Water Act Citizen Suits&lt;br/&gt;33 U.S.C. 1365 — 60-day notice&lt;br/&gt;────────────────────&lt;br/&gt;6. Municipal Home Rule Conflict&lt;br/&gt;5B-2-21b vs. 8-1-5a Home Rule&lt;br/&gt;🔗 wvpublic.org/senate-committee-&lt;br/&gt;carves-out-microgrid-tax-revenue-&lt;br/&gt;for-counties&lt;br/&gt;🔗 law.wv.gov/wvcode/ChapterView/&lt;br/&gt;chap=5B&amp;article=2&amp;section=21b"]
+
+CIVIC_NODE --&gt; STATUTE["📜 WV Code 5B-2-21b Contradictions&lt;br/&gt;Source: WV Legislature enrolled text&lt;br/&gt;────────────────────&lt;br/&gt;1. Emergency rulemaking bypasses&lt;br/&gt;public notice and comment periods&lt;br/&gt;violates 14th Amendment due process&lt;br/&gt;────────────────────&lt;br/&gt;2. Conflicts with Municipal Home&lt;br/&gt;Rule Program 8-1-5a — cannot&lt;br/&gt;arbitrarily revoke home rule powers&lt;br/&gt;────────────────────&lt;br/&gt;3. Exempts data centers from&lt;br/&gt;horticultural/agricultural ordinances&lt;br/&gt;violates rural property rights&lt;br/&gt;────────────────────&lt;br/&gt;4. Prohibits county noise ordinances&lt;br/&gt;but OSHA 29 CFR 1910.95 mandates&lt;br/&gt;federal noise limits — supremacy clause&lt;br/&gt;────────────────────&lt;br/&gt;5. Strips building permit revenue&lt;br/&gt;and inspection authority — unfunded&lt;br/&gt;mandate for emergency services&lt;br/&gt;────────────────────&lt;br/&gt;6. Business license exemption may&lt;br/&gt;violate WV Antitrust Act Chapter 47&lt;br/&gt;🔗 law.wv.gov/wvcode/ChapterView/&lt;br/&gt;chap=5B&amp;article=2&amp;section=21b&lt;br/&gt;🔗 wvlegislature.gov/Bill_Text_HTML/&lt;br/&gt;2025_SESSIONS/RS/bills/&lt;br/&gt;hb2014 sub1 enr.pdf"]
+
+CIVIC_NODE --&gt; ELECTIONS["🗳️ 2026 ELECTION RACES&lt;br/&gt;Source: Berkeley County official records&lt;br/&gt;PRIMARY: May 12 2026&lt;br/&gt;Early voting: April 29 – May 9&lt;br/&gt;Party reg deadline: April 21 2026&lt;br/&gt;────────────────────&lt;br/&gt;MOST VULNERABLE:&lt;br/&gt;WV Senate District 15&lt;br/&gt;Incumbent: Darren Thorne (R)&lt;br/&gt;Appointed Dec 2024 — never elected&lt;br/&gt;Voted YES on HB 2014 as Delegate&lt;br/&gt;Challengers: Ken Reed former Delegate&lt;br/&gt;Robert Wolford Points WV&lt;br/&gt;────────────────────&lt;br/&gt;Berkeley County Commission Norborne&lt;br/&gt;Incumbent: Eddie Gochenour (R)&lt;br/&gt;Challenger: Ken Mattson (R Inwood)&lt;br/&gt;────────────────────&lt;br/&gt;WV Senate District 16&lt;br/&gt;Incumbent: Jason Barrett (R)&lt;br/&gt;Voted YES on HB 2014 Senate 32-1&lt;br/&gt;Challenger: Chantele Mack Martinsburg&lt;br/&gt;Won 2022 with 60.5%&lt;br/&gt;────────────────────&lt;br/&gt;UNCONTESTED YES VOTERS:&lt;br/&gt;Michael Hite HD 92&lt;br/&gt;Mike Hornby HD 93&lt;br/&gt;Chuck Horst HD 95&lt;br/&gt;Jim Whitacre Commission&lt;br/&gt;Focus: November general election&lt;br/&gt;────────────────────&lt;br/&gt;STATEWIDE LONG SHOT:&lt;br/&gt;Sen. Shelley Moore Capito (R) 3 terms&lt;br/&gt;Challengers: McKinney McNulty Willis&lt;br/&gt;🔗 berkeleywv.org/m/newsflash/Home/Detail/200&lt;br/&gt;🔗 ballotpedia.org/Darren_Thorne&lt;br/&gt;🔗 ballotpedia.org/Chantele_Mack&lt;br/&gt;🔗 ballotpedia.org/Ken_Reed"]
+
+CIVIC_NODE --&gt; CROSSOVER["🔄 Voter Registration Strategy&lt;br/&gt;Source: WV Secretary of State&lt;br/&gt;CRITICAL DEADLINE: April 21 2026&lt;br/&gt;Democrats can re-register Republican&lt;br/&gt;to vote in May 12 primary&lt;br/&gt;Completely legal under WV election law&lt;br/&gt;Most Berkeley County races decided&lt;br/&gt;in Republican primaries not generals&lt;br/&gt;Organized crossover could provide&lt;br/&gt;margin to defeat HB 2014 supporters&lt;br/&gt;Historical precedent: crossover voting&lt;br/&gt;has removed entrenched incumbents&lt;br/&gt;in other states with organized effort&lt;br/&gt;🔗 sos.wv.gov/elections — WV voter registration&lt;br/&gt;🔗 wvmetronews.com/2026/03/23/&lt;br/&gt;public-speaks-out-on-data-center-&lt;br/&gt;planned-for-falling-waters-area"]
+
+CIVIC_NODE --&gt; CANDIDATES["❓ Key Questions for All Candidates&lt;br/&gt;Source: WV Citizen Action Group advocacy&lt;br/&gt;'Do you support HB 2014 as signed?'&lt;br/&gt;'Will you restore county zoning&lt;br/&gt;authority over data centers?'&lt;br/&gt;'Will you return diverted property&lt;br/&gt;tax revenue to Berkeley County&lt;br/&gt;schools?' est. 7.5M per year&lt;br/&gt;'Will you refuse to sign NDAs&lt;br/&gt;related to government business?'&lt;br/&gt;'Do you support strengthening&lt;br/&gt;or weakening WV FOIA?'&lt;br/&gt;🔗 wvcag.org — WV Citizen Action Group&lt;br/&gt;🔗 mapwv.gov/vote — find your district&lt;br/&gt;🔗 wvpolicy.org/hb-2014-would-preempt-&lt;br/&gt;local-control-divert-millions-annually"]
+
+CIVIC_NODE --&gt; PETITION["📣 Change.org Petition&lt;br/&gt;'Amend HB 2014 to Restore Our&lt;br/&gt;Right to Self-Determination&lt;br/&gt;and Governance'&lt;br/&gt;Restore local zoning control&lt;br/&gt;Return diverted school tax revenue&lt;br/&gt;Enforce constitutional transparency&lt;br/&gt;End NDA secrecy by public officials&lt;br/&gt;🔗 change.org — search Amend HB2014&lt;br/&gt;🔗 wvecouncil.org/stop-hb-2014-&lt;br/&gt;senate-hearing-today-at-1-pm"]
+
+%% ── STYLES ───────────────────────────────────────────────────
+classDef bill fill:#1a1a2e,color:#e0e0ff,stroke:#6c63ff,stroke-width:3px,font-weight:bold
+classDef support fill:#1b4332,color:#d8f3dc,stroke:#52b788,stroke-width:2px
+classDef oppose fill:#370617,color:#ffccd5,stroke:#e63946,stroke-width:2px
+classDef supporter fill:#2d6a4f,color:#d8f3dc,stroke:#52b788,stroke-width:1px
+classDef opposer fill:#6b1a1a,color:#ffccd5,stroke:#e63946,stroke-width:1px
+classDef votes fill:#1c2541,color:#ccd6f6,stroke:#4fc3f7,stroke-width:2px
+classDef controversy fill:#3d1a00,color:#ffe0b2,stroke:#ff9800,stroke-width:3px,font-weight:bold
+classDef hanshaw fill:#4a2000,color:#ffe0b2,stroke:#ff9800,stroke-width:2px
+classDef ethics fill:#5c1a00,color:#ffccbc,stroke:#ff5722,stroke-width:2px
+classDef timeline fill:#1a2a1a,color:#c8e6c9,stroke:#81c784,stroke-width:1px
+classDef company fill:#1a1a3a,color:#c5cae9,stroke:#7986cb,stroke-width:1px
+classDef community fill:#2a1a2a,color:#e1bee7,stroke:#ab47bc,stroke-width:1px
+classDef foianode fill:#1a2a3a,color:#b3e5fc,stroke:#29b6f6,stroke-width:3px,font-weight:bold
+classDef foia fill:#0d1f2d,color:#b3e5fc,stroke:#29b6f6,stroke-width:1px
+classDef transparency fill:#2a0d0d,color:#ffcdd2,stroke:#ef9a9a,stroke-width:2px
+classDef penzance fill:#1a2a3a,color:#e8eaf6,stroke:#7986cb,stroke-width:3px,font-weight:bold
+classDef penzbox fill:#0d1a2d,color:#c5cae9,stroke:#5c6bc0,stroke-width:1px
+classDef blog fill:#1a0a2e,color:#e8d5ff,stroke:#9c27b0,stroke-width:3px,font-weight:bold
+classDef blogbox fill:#2a0a3a,color:#e1bee7,stroke:#7b1fa2,stroke-width:1px
+classDef water fill:#0a1a2a,color:#b3e5fc,stroke:#0288d1,stroke-width:1px
+classDef radio fill:#1a0a1a,color:#f8bbd0,stroke:#e91e63,stroke-width:2px
+classDef election fill:#1a2a0a,color:#dcedc8,stroke:#558b2f,stroke-width:1px
+
+class BILL bill
+class SUPPORT support
+class OPPOSE oppose
+class CONTROVERSY controversy
+class MORRISEY,RILEY,FEHRENBACHER,POWELL supporter
+class MORRISEY_COI controversy
+class PUSHKIN,BRIDGES,GEARHEART,FLANIGAN,PHILLIPS,GOCHENOUR opposer
+class VOTES votes
+class HANSHAW_MAIN hanshaw
+class ETHICS ethics
+class TIMELINE timeline
+class FUNDAMENTAL company
+class TUCKER community
+class FOIA_NODE foianode
+class FOIA1,FOIA2,FOIA3 foia
+class TRANSPARENCY transparency
+class PENZANCE_NODE penzance
+class PENZANCE,ECON,ENV penzbox
+class GARY water
+class WRNR,JARVIS radio
+class COMMUNITY community
+class CIVIC_NODE blog
+class LEGAL,STATUTE,CANDIDATES,PETITION blogbox
+class ELECTIONS,CROSSOVER election
+</div>
+```
+
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    flowchart: {
+      htmlLabels: true,
+      curve: 'basis',
+      nodeSpacing: 50,
+      rankSpacing: 80,
+      padding: 20,
+    },
+    themeVariables: {
+      background: '#0d1117',
+      primaryColor: '#1f2937',
+      primaryTextColor: '#e6edf3',
+      primaryBorderColor: '#30363d',
+      lineColor: '#58a6ff',
+      secondaryColor: '#161b22',
+      tertiaryColor: '#21262d',
+      edgeLabelBackground: '#161b22',
+      fontSize: '13px',
+    }
+  });
+
+  // Zoom & Pan
+  let scale = 1;
+  let panMode = true;
+  let isPanning = false;
+  let startX, startY, scrollLeft, scrollTop;
+  const container = document.getElementById('diagram-container');
+  const wrapper = document.getElementById('diagram-wrapper');
+
+  function zoom(delta) {
+    scale = Math.min(Math.max(scale + delta, 0.2), 4);
+    wrapper.style.transform = `scale(${scale})`;
+    document.getElementById('zoom-level').textContent = Math.round(scale * 100) + '%';
+  }
+
+  function resetView() {
+    scale = 1;
+    wrapper.style.transform = 'scale(1)';
+    document.getElementById('zoom-level').textContent = '100%';
+    container.scrollTo(0, 0);
+  }
+
+  function fitToWindow() {
+    const cw = container.clientWidth - 48;
+    const ch = container.clientHeight - 48;
+    const dw = wrapper.scrollWidth;
+    const dh = wrapper.scrollHeight;
+    scale = Math.min(cw / dw, ch / dh, 1);
+    scale = Math.max(scale, 0.1);
+    wrapper.style.transform = `scale(${scale})`;
+    document.getElementById('zoom-level').textContent = Math.round(scale * 100) + '%';
+  }
+
+  function togglePan() {
+    panMode = !panMode;
+    const btn = document.getElementById('pan-btn');
+    btn.classList.toggle('active', panMode);
+    container.style.cursor = panMode ? 'grab' : 'default';
+  }
+
+  // Wheel zoom
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    zoom(e.deltaY < 0 ? 0.1 : -0.1);
+  }, { passive: false });
+
+  // Mouse pan
+  container.addEventListener('mousedown', (e) => {
+    if (!panMode) return;
+    isPanning = true;
+    startX = e.pageX - container.offsetLeft;
+    startY = e.pageY - container.offsetTop;
+    scrollLeft = container.scrollLeft;
+    scrollTop = container.scrollTop;
+    container.style.cursor = 'grabbing';
+  });
+
+  container.addEventListener('mouseleave', () => { isPanning = false; container.style.cursor = panMode ? 'grab' : 'default'; });
+  container.addEventListener('mouseup', () => { isPanning = false; container.style.cursor = panMode ? 'grab' : 'default'; });
+  container.addEventListener('mousemove', (e) => {
+    if (!isPanning) return;
+    e.preventDefault();
+    container.scrollLeft = scrollLeft - (e.pageX - container.offsetLeft - startX);
+    container.scrollTop = scrollTop - (e.pageY - container.offsetTop - startY);
+  });
+
+  // Auto-fit on load
+  window.addEventListener('load', () => {
+    setTimeout(fitToWindow, 800);
+  });
+</script>
+
+</body>
+</html>
